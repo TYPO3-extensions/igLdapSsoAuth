@@ -546,7 +546,7 @@ class Authentication
         }
 
         $typo3Groups = array();
-
+        $defaultGroup = Typo3GroupRepository::create($table);
         foreach ($ldapGroups as $ldapGroup) {
             $groupName = null;
             if (isset($mapping['title']) &&  preg_match("`<([^$]*)>`", $mapping['title'])) {
@@ -558,7 +558,7 @@ class Authentication
             if (count($existingTypo3Groups) > 0) {
                 $typo3Group = $existingTypo3Groups[0];
             } else {
-                $typo3Group = Typo3GroupRepository::create($table);
+                $typo3Group = $defaultGroup;
                 $typo3Group['pid'] = (int)$pid;
                 $typo3Group['crdate'] = $GLOBALS['EXEC_TIME'];
                 $typo3Group['tstamp'] = $GLOBALS['EXEC_TIME'];
@@ -588,7 +588,7 @@ class Authentication
         }
 
         $typo3Users = array();
-
+        $defaultUser = Typo3UserRepository::create($table);
         foreach ($ldapUsers as $ldapUser) {
             $username = null;
             if (isset($mapping['username']) && preg_match("`<([^$]*)>`", $mapping['username'])) {
@@ -599,7 +599,7 @@ class Authentication
             if (count($existingTypo3Users) > 0) {
                 $typo3User = $existingTypo3Users[0];
             } else {
-                $typo3User = Typo3UserRepository::create($table);
+                $typo3User = $defaultUser;
                 $typo3User['pid'] = (int)$pid;
                 $typo3User['crdate'] = $GLOBALS['EXEC_TIME'];
                 $typo3User['tstamp'] = $GLOBALS['EXEC_TIME'];
